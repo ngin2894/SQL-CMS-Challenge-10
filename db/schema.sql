@@ -1,6 +1,8 @@
 DROP DATABASE if EXISTS employee_tracker;
 CREATE DATABASE employee_tracker;
 
+\c employee_tracker;
+
 DROP TABLE IF EXISTS employee CASCADE;
 DROP TABLE IF EXISTS role CASCADE;
 DROP TABLE IF EXISTS department CASCADE;
