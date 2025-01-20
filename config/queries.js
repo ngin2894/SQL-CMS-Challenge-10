@@ -15,4 +15,8 @@ const getEmployees = async () => {
     return result.rows;
     }
 
-module.exports = { getDepartments, getRoles, getEmployees };
+const addDepartment = async (name) => {
+    await pool.query('INSERT INTO department (name) VALUES ($1)', [name]);
+    }
+
+module.exports = { getDepartments, getRoles, getEmployees, addDepartment };

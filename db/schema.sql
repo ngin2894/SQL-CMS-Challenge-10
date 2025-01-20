@@ -3,9 +3,10 @@ CREATE DATABASE employee_tracker;
 
 \c employee_tracker;
 
---DROP TABLE IF EXISTS employee CASCADE;
---DROP TABLE IF EXISTS role CASCADE;
---DROP TABLE IF EXISTS department CASCADE;
+-- Added here for troubleshooting purposes 
+DROP TABLE IF EXISTS employee CASCADE;
+DROP TABLE IF EXISTS role CASCADE;
+DROP TABLE IF EXISTS department CASCADE;
 
 CREATE TABLE department (
     id SERIAL PRIMARY KEY,

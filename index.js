@@ -1,7 +1,8 @@
 const db = require('./db/connections');
-const { getDepartments, getRoles, getEmployees } = require('./config/queries');
+const { getDepartments, getRoles, getEmployees, addDepartment } = require('./config/queries');
 const MainMenu = require('./index');
 
+// Added for troubleshooting purposes only
 /* db.query('SELECT * FROM department', (err, res) => {
     if (err) {
         console.error(err);
@@ -53,6 +54,16 @@ const init = async () => {
         case 'View All Employees':
             const employees = await getEmployees();
             console.table(employees);
+            break;
+        case 'Add a Department':
+            const { name } = await inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'name',
+                    message: 'What is the name of the department?',
+                },
+            ]);
+            await addDepartment(name);
             break;
         case 'Exit':
             exit = true;
