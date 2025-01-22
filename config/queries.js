@@ -28,4 +28,8 @@ const validateDepartmentId = async (id) => {
     return result.rowCount > 0;
     };
 
-module.exports = { getDepartments, getRoles, getEmployees, addDepartment, addRole, validateDepartmentId };
+const addEmployee = async (first_name, last_name, role_id, manager_id) => {
+    await pool.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ($1, $2, $3, $4)', [first_name, last_name, role_id, manager_id]);
+    }
+
+module.exports = { getDepartments, getRoles, getEmployees, addDepartment, addRole, validateDepartmentId, addEmployee };
