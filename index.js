@@ -1,5 +1,5 @@
 const db = require('./db/connections');
-const { getDepartments, getRoles, getEmployees, addDepartment } = require('./config/queries');
+const { getDepartments, getRoles, getEmployees, addDepartment, addRole } = require('./config/queries');
 const MainMenu = require('./index');
 
 // Added for troubleshooting purposes only
@@ -65,6 +65,34 @@ const init = async () => {
             ]);
             await addDepartment(name);
             break;
+            case 'Add a Role':
+                const { title, salary, department_id } = await inquirer.prompt([
+                    {
+                        type: 'input',
+                        name: 'title',
+                        message: 'What is the title of the role?',
+                    },
+                    {
+                        type: 'input',
+                        name: 'salary',
+                        message: 'What is the salary for this role?',
+                        validate: (value) => !isNaN(value) || 'Please enter a valid number',
+                    },
+                    {
+                        type: 'input',
+                        name: 'department_id',
+                        message: 'What is the department ID for this role?',
+                        validate: async (value) => {
+                            if (isNaN(value)) return 'Please enter a valid number';
+                            const validateDepartmentId = require('./config/queries').validateDepartmentId;
+                            const exists = await validateDepartmentId(value);
+                            return exists || 'Invalid department ID. Please enter an existing department ID.';
+                        },
+                    },
+                ]);
+                await addRole(title, salary, department_id);
+                console.log('Role added successfully!');
+                break;
         case 'Exit':
             exit = true;
             break;
