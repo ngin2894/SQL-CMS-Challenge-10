@@ -1,5 +1,5 @@
 const db = require('./db/connections');
-const { getDepartments, getRoles, getEmployees, addDepartment, addRole, addEmployee } = require('./config/queries');
+const { getDepartments, getRoles, getEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole } = require('./config/queries');
 const MainMenu = require('./index');
 
 // Added for troubleshooting purposes only
@@ -126,8 +126,26 @@ const init = async () => {
                 await addEmployee(first_name, last_name, role_id, manager_id);
                 console.log('Employee added successfully!');
                 break;
+                case 'Update an Employee Role':
+      const { employeeId, newRoleId } = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'employeeId',
+            message: 'Enter employee ID to update:',
+            validate: (value) => !isNaN(value) || 'Please enter a valid numeric employee ID',
+          },
+          {
+            type: 'input',
+            name: 'newRoleId',
+            message: 'Enter new role ID:',
+            validate: (value) => !isNaN(value) || 'Please enter a valid numeric role ID',
+          },
+      ]);
+      await updateEmployeeRole(employeeId, newRoleId);
+      break;
             case 'Exit':
                 exit = true;
+                console.log('Goodbye!');
                 break;
         }
     }
